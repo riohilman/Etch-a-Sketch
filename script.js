@@ -5,5 +5,9 @@ for (let i = 0; i < 256; i++) {
     grid.setAttribute("class", "box");
     
     container.appendChild(grid);
+
+    grid.addEventListener("mouseover", () => {
+        grid.style.backgroundColor = "red";
+    })
 }
 
