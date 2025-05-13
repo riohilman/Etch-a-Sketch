@@ -1,0 +1,19 @@
+* {
+    box-sizing: border-box;
+}
+
+#container {
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    width: 560px;
+    justify-content: center;
+    align-items: center;
+}
+
+.box {
+    width: 35px;
+    height: 35px;
+    background-color: blue;
+    border: 1px solid black;
+}
