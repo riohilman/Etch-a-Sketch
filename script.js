@@ -8,35 +8,49 @@ function getRandomColor() {
     return `rgb(${r}, ${g}, ${b})`;
 }
 
-for (let i = 0; i < 256; i++) {
-    const grid = document.createElement("div");
-    grid.setAttribute("class", "box");
-    grid.style.width = `${600 / 16}px`;
-    grid.style.height = `${600 / 16}px`;
-    container.appendChild(grid);
+function createGrid(side) {
+    container.innerHTML = "";
+    const boxSize = 600 / side;
 
-    grid.addEventListener("mouseover", () => {
-        grid.style.backgroundColor = getRandomColor();
-    })
-}   
+    for (let i = 0; i < side * side; i++) {
+        const grid = document.createElement("div");
+        grid.setAttribute("class", "box");
+        grid.style.width = `${boxSize}px`;
+        grid.style.height = `${boxSize}px`;
+
+        grid.dataset.opacity = 0;
+        grid.dataset.colored = "false";
+        container.appendChild(grid);
+
+        grid.addEventListener("mouseover", () => {
+            let opacity = parseFloat(grid.dataset.opacity);
+            if (opacity < 1) {
+                opacity += 0.1;
+                grid.dataset.opacity = opacity;
+
+                if (grid.dataset.colored === "false") {
+                    const color = getRandomColor();
+                    grid.style.backgroundColor = color;
+                    grid.dataset.color = color;
+                    grid.dataset.colored = "true";
+                }
+
+                const baseColor = grid.dataset.color;
+                grid.style.backgroundImage = `linear-gradient(rgba(0,0,0,${opacity}), rgba(0,0,0,${opacity}))`;
+                grid.style.backgroundBlendMode = "multiply";
+                grid.style.backgroundColor = baseColor;
+            }
+        });
+    }
+}
+
+createGrid(16);
 
 button.addEventListener("click", () => {
     let side;
     do {
         side = parseInt(prompt("How many squares per side? (1–100)"));
     } while (isNaN(side) || side < 1 || side > 100);
-    
-    container.innerHTML = "";
-    const boxSize = 600 / side;
-    for (let i = 0; i < side*side; i++) {
-        const grid = document.createElement("div");
-        grid.setAttribute("class", "box");
-        grid.style.width = `${boxSize}px`;
-        grid.style.height = `${boxSize}px`;
-        container.appendChild(grid);
-    
-        grid.addEventListener("mouseover", () => {
-            grid.style.backgroundColor = getRandomColor();
-        })
-    }        
+
+    createGrid(side);
 });
