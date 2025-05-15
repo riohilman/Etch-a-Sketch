@@ -1,6 +1,12 @@
 const container = document.querySelector("#container");
 const button = document.querySelector("#change-grid");
 
+function getRandomColor() {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    return `rgb(${r}, ${g}, ${b})`;
+}
 
 for (let i = 0; i < 256; i++) {
     const grid = document.createElement("div");
@@ -10,7 +16,7 @@ for (let i = 0; i < 256; i++) {
     container.appendChild(grid);
 
     grid.addEventListener("mouseover", () => {
-        grid.style.backgroundColor = "black";
+        grid.style.backgroundColor = getRandomColor();
     })
 }   
 
@@ -30,12 +36,7 @@ button.addEventListener("click", () => {
         container.appendChild(grid);
     
         grid.addEventListener("mouseover", () => {
-            grid.style.backgroundColor = "black";
+            grid.style.backgroundColor = getRandomColor();
         })
     }        
 });
-
-
-
-
-
